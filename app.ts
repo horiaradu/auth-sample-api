@@ -17,6 +17,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.set('etag', false);
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
 // Authorization middleware. When used, the Access Token must
 // exist and be verified against the Auth0 JSON Web Key Set.
 const checkJwt = jwt({
@@ -32,7 +38,7 @@ const checkJwt = jwt({
   algorithms: ['RS256'],
 });
 
-app.get('/', checkJwt, (req: Request, res: Response) => {
+app.get('/', checkJwt, (req, res) => {
   res.send('Express + TypeScript Server');
 });
 
