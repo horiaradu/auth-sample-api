@@ -39,7 +39,7 @@ const checkJwt = jwt({
 });
 
 app.get('/', checkJwt, (req, res) => {
-  res.send('Express + TypeScript Server');
+  res.json('Express + TypeScript Server');
 });
 
 app.listen(port, () => {
